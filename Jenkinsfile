@@ -9,6 +9,11 @@ pipeline {
         git url:'https://github.com/JonathanAlbertMorales/capstoneproj.git', branch:'master'
       }
     }
+    stage('Lint HTML'){
+                steps{
+                    sh 'tidy -q -e *.html'
+                }
+            }
       stage("Build image") {
             steps {
                 script {
