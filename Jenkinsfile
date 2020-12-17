@@ -33,6 +33,18 @@ pipeline {
             }
         }
 
+       stage('Deploy') {
+              steps{
+            
+                  withAWS(credentials: 'aws', region: 'us-east-1') {
+                      sh "aws eks --region us-east-1 update-kubeconfig --name cluster"
+                      sh "kubectl config use-context arn:aws:eks:us-east-1:799365621121:cluster/cluster"
+                      sh "kubectl apply -f deployment.yml"
+                      sh "kubectl get nodes"       
+                  }
+              }
+        }
+
   }
 
 }
